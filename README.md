@@ -1,4 +1,4 @@
-## UTCI-Heatmap App
+## Architext App
 
 ![App](/images/app.png)
 
