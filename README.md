@@ -2,10 +2,12 @@
 
 ![App](/images/app.png)
 
-## To run the app locally
 
-- Clone the repo locally, go into the directory and run the following commands;
+## Local development
 
-- `pip install -r requierments.txt`
-
-- `streamlit run app.py`
+1. Clone the repo locally
+2. Go into the directory and run the following commands
+   ```shell
+   pip install -r requierments.txt
+   streamlit run app.py
+   ```
