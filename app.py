@@ -6,7 +6,7 @@ import uuid
 
 from helper import generate_3d_model, add_viewer
 
-url='https://huggingface.co/gradioiframe/architext/Architext_deployed/api/predict/'
+url = 'https://huggingface.co/gradioiframe/architext/Architext_deployed/api/predict/'
 
 st.set_page_config(
     page_title='Architext',
@@ -18,7 +18,7 @@ st.set_page_config(
 query = st.experimental_get_query_params()
 platform = special.get_host()
 
-submit= False
+submit = False
 first_try = 'architext_layout' not in st.session_state
 st.image('architext_header.png')
 form, image, three_d = st.columns(3)
@@ -28,7 +28,7 @@ with form:
         user_input = st.text_input(
             label='DESCRIBE YOUR IDEAL APARTMENT',
             value='An apartment with two bedrooms and one bathroom',
-            )
+        )
 
         creativity = st.selectbox(
             label='Creativity', options=['Low', 'Medium', 'High']
@@ -96,23 +96,23 @@ else:
 
 
 if not first_try and platform == 'rhino':
+
     inputs.send(
         data=hb_model.to_dict(),
-        isPollinationModel=True,
-        defaultChecked=True,
+        unique_id=str(uuid.uuid4()),
+        default_checked=False,
+        is_pollination_model=True,
         label='View design option',
-        uniqueId='unique-id-02',
-        options={'layer': 'daylight_factor_results'},
         key='architext option',
     )
 
     button.send(
-        'BakePollinationModel',
-        hb_model.to_dict(),
-        'bake-geometry-key',
+        action='BakePollinationModel',
+        data=hb_model.to_dict(),
+        unique_id=str(uuid.uuid4()),
         options={
             "layer": "architext_option",
             "units": "Meters"
         },
         key='bake-geometry',
-        )
+    )
