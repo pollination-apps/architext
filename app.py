@@ -21,7 +21,14 @@ platform = special.get_host()
 submit = False
 first_try = 'architext_layout' not in st.session_state
 st.image('architext_header.png')
-form, image, three_d = st.columns(3)
+
+
+if not first_try and platform == 'rhino':
+    form = st.container()
+    image = st.container()
+    three_d = st.container()
+else:
+    form, image, three_d = st.columns(3)
 
 with form:
     with st.form('Generate Design Option'):
@@ -77,8 +84,9 @@ if submit:
     vtk_file, hb_model = generate_3d_model(
         height, wwr, st.session_state['architext_layout_id']
     )
-    with three_d:
-        add_viewer(vtk_file)
+    if platform != 'rhino':
+        with three_d:
+            add_viewer(vtk_file)
 
     st.experimental_rerun()
 else:
@@ -91,8 +99,9 @@ else:
         vtk_file, hb_model = generate_3d_model(
             height, wwr, st.session_state['architext_layout_id']
         )
-        with three_d:
-            add_viewer(vtk_file)
+        if platform != 'rhino':
+            with three_d:
+                add_viewer(vtk_file)
 
 
 if not first_try and platform == 'rhino':
