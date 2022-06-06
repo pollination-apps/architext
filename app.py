@@ -104,24 +104,36 @@ else:
                 add_viewer(vtk_file)
 
 
-if not first_try and platform == 'rhino':
+if not first_try:
+    if platform == 'rhino':
+        inputs.send(
+            data=hb_model.to_dict(),
+            unique_id='rh-option',
+            default_checked=False,
+            is_pollination_model=True,
+            label='View design option',
+            key='rh-option',
+        )
 
-    inputs.send(
-        data=hb_model.to_dict(),
-        unique_id=str(uuid.uuid4()),
-        default_checked=False,
-        is_pollination_model=True,
-        label='View design option',
-        key='architext option',
-    )
-
-    button.send(
-        action='BakePollinationModel',
-        data=hb_model.to_dict(),
-        unique_id=str(uuid.uuid4()),
-        options={
-            "layer": "architext_option",
-            "units": "Meters"
-        },
-        key='bake-geometry',
-    )
+        button.send(
+            action='BakePollinationModel',
+            data=hb_model.to_dict(),
+            unique_id='rh-geometry',
+            options={
+                "layer": "architext_option",
+                "units": "Meters"
+            },
+            key='rh-geometry',
+        )
+    elif platform == 'sketchup':
+        button.send(
+            action='BakePollinationModel',
+            data=hb_model.to_dict(),
+            unique_id='skp-geometry',
+            options={
+                "layer": "architext_option",
+                "units": "Meters"
+            },
+            key='skp-geometry',
+            platform=platform
+        )
